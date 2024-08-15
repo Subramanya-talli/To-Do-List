@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/6332efefc1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="Css/style.css">
+    <title>To Do List</title>
+</head>
+
+<body>
+    <main>
+        <div class="outer-container">
+            <div>
+                <h2>To-Do List</h2>
+                <div class="inner-container">
+                    <form method="POST" action="/api/tasks" class="add-task">
+                        <input type="text" name="task" placeholder="Enter your task">
+                        <button type="submit">Add</button>
+                    </form>
+                    <% if(taskList.length==0) { %>
+                        <p>Add Your Daily To-Do Task Here</p>
+                        <% } else{ %>
+                            <ul class="task-list">
+                                <% taskList.forEach((Task, index)=>{ %>
+                                    <div class="tasks">
+                                        <div class="task-name">
+                                            <li>
+                                                <%= Task.task %>
+                                            </li>
+                                        </div>
+                                        <div class="edit-delete-btn">
+                                            <a class="edit-btn" href="/api/tasks/edit/<%=Task._id %>"><i
+                                                    class="fa-solid fa-pen-to-square"></i></a>
+                                            <form action="/api/tasks/<%= Task._id %>" method="POST" class="delete-btn">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <!-- To handle method override -->
+                                                <button type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                            </ul>
+                            <% } %>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
